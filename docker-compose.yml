@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  ml-pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: atomization-ml:latest
+    container_name: atomization-ml-container
+    volumes:
+      # Монтируем локальные папки в контейнер
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./results:/app/results
+    environment:
+      - PYTHONUNBUFFERED=1
+    # Команда по умолчанию (можно переопределить)
+    command: ["GradientBoosting", "data/roboBohr.csv", "42", "results"]
